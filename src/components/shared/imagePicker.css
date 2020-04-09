@@ -1,0 +1,21 @@
+.picker {
+  width: 30rem;
+  max-width: 90%;
+  height: 20rem;
+  max-height: 35vh;
+  border: 1px solid var(--ion-color-primary-shade);
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.imagePicker .selected-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.imagePicker input[type="file"] {
+  display: none;
+}

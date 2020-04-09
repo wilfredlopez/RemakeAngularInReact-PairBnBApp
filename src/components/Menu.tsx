@@ -7,86 +7,84 @@ import {
   IonListHeader,
   IonMenu,
   IonMenuToggle,
-  IonNote,
-} from '@ionic/react';
-import React from 'react';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { archiveOutline, archiveSharp, bookmarkOutline, heartOutline, heartSharp, mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, trashOutline, trashSharp, warningOutline, warningSharp } from 'ionicons/icons';
-import './Menu.css';
+  IonTitle,
+} from "@ionic/react"
+import {
+  archiveOutline,
+  archiveSharp,
+  // bookmarkOutline,
+  heartOutline,
+  heartSharp,
+  paperPlaneOutline,
+  paperPlaneSharp,
+} from "ionicons/icons"
+import React from "react"
+import { RouteComponentProps, withRouter } from "react-router-dom"
+import "./Menu.css"
+import { useAuthContext } from "../context/AuthContext"
 
-interface MenuProps extends RouteComponentProps {
-  selectedPage: string;
-}
+interface MenuProps extends RouteComponentProps {}
 
 interface AppPage {
-  url: string;
-  iosIcon: string;
-  mdIcon: string;
-  title: string;
+  url: string
+  iosIcon: string
+  mdIcon: string
+  title: string
 }
 
 const appPages: AppPage[] = [
   {
-    title: 'Inbox',
-    url: '/page/Inbox',
-    iosIcon: mailOutline,
-    mdIcon: mailSharp
-  },
-  {
-    title: 'Outbox',
-    url: '/page/Outbox',
+    title: "Discover Places",
+    url: "/places/tabs/discover",
     iosIcon: paperPlaneOutline,
-    mdIcon: paperPlaneSharp
+    mdIcon: paperPlaneSharp,
   },
   {
-    title: 'Favorites',
-    url: '/page/Favorites',
+    title: "Your Bookings",
+    url: "/bookings",
     iosIcon: heartOutline,
-    mdIcon: heartSharp
+    mdIcon: heartSharp,
   },
   {
-    title: 'Archived',
-    url: '/page/Archived',
+    title: "logout",
+    url: "/logout",
     iosIcon: archiveOutline,
-    mdIcon: archiveSharp
+    mdIcon: archiveSharp,
   },
-  {
-    title: 'Trash',
-    url: '/page/Trash',
-    iosIcon: trashOutline,
-    mdIcon: trashSharp
-  },
-  {
-    title: 'Spam',
-    url: '/page/Spam',
-    iosIcon: warningOutline,
-    mdIcon: warningSharp
+]
+
+// const labels = ["Family", "Friends", "Reminders"]
+
+const Menu: React.FunctionComponent<MenuProps> = () => {
+  const { user } = useAuthContext()
+  if (!user) {
+    return null
   }
-];
-
-const labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
-
-const Menu: React.FunctionComponent<MenuProps> = ({ selectedPage }) => {
-
   return (
-    <IonMenu contentId="main" type="overlay">
+    <IonMenu contentId="main" type="push">
+      <IonListHeader color="primary">
+        <IonTitle>PairBnB</IonTitle>
+      </IonListHeader>
       <IonContent>
         <IonList id="inbox-list">
-          <IonListHeader>Inbox</IonListHeader>
-          <IonNote>hi@ionicframework.com</IonNote>
           {appPages.map((appPage, index) => {
             return (
               <IonMenuToggle key={index} autoHide={false}>
-                <IonItem className={selectedPage === appPage.title ? 'selected' : ''} routerLink={appPage.url} routerDirection="none" lines="none" detail={false}>
+                <IonItem
+                  routerLink={appPage.url}
+                  routerDirection="none"
+                  lines="none"
+                  detail={false}
+                >
                   <IonIcon slot="start" icon={appPage.iosIcon} />
                   <IonLabel>{appPage.title}</IonLabel>
                 </IonItem>
               </IonMenuToggle>
-            );
+            )
           })}
         </IonList>
 
-        <IonList id="labels-list">
+        {/* <IonList id="labels-list">
           <IonListHeader>Labels</IonListHeader>
           {labels.map((label, index) => (
             <IonItem lines="none" key={index}>
@@ -94,10 +92,10 @@ const Menu: React.FunctionComponent<MenuProps> = ({ selectedPage }) => {
               <IonLabel>{label}</IonLabel>
             </IonItem>
           ))}
-        </IonList>
+        </IonList> */}
       </IonContent>
     </IonMenu>
-  );
-};
+  )
+}
 
-export default withRouter(Menu);
+export default withRouter(Menu)

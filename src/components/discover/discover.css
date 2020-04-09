@@ -1,0 +1,6 @@
+.main-image {
+  max-width: 400px;
+  max-height: 350px;
+  margin: auto;
+  object-fit: cover;
+}
